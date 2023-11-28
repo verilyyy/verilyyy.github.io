@@ -1,1 +1,66 @@
-Hello World
+
+<!-- HOMEWORK 2: Show a random joke using the given joke API. 
+     Inside the div with class .joke, add two headings with id setup and punchline
+
+     Inside script tag, 
+     Send ajax request 
+           with url : jokeAPI (variable that contains the link to API)
+           success: showJoke
+     Create new function showJoke, with one parameter response
+     Use console.log to look at response object.
+     Set text of #setup with the setup text from response.
+     Set text of #punchline with the punchline text from the response.
+-->
+
+<html>
+  <head>
+    <title>Jokes</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Patua+One|Playfair+Display|Alfa+Slab+One&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Patua+One|Playfair+Display|Alfa+Slab+One&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="joke">
+      <h1 id = 'setup'></h1>
+      <img id="pic" src="funny.gif">
+      <h1 id = 'punchline'></h1>
+    </div>
+    <button id ="refresh">Click here for another joke</button>
+    
+    <script>
+      var jokeAPI = "https://official-joke-api.appspot.com/random_joke";
+      var myPromise = new Promise(sendRequest);
+      function sendRequest(resolve,reject){
+      $.ajax({
+       url:jokeAPI,
+       dataType:"json",
+       success:function (data){
+         console.log(data);
+         resolve(data);
+       },
+       error:reject
+     });
+      }
+      function fulfilled(data) {
+      $('#setup').text(data.setup);
+      $('#punchline').text(data.punchline);
+      $('body').css('background-image',"url('https://source.unsplash.com/1600x900/?city')");  
+    }
+    function rejected() {
+      alert('There is an error with joke API.');
+    }
+    myPromise.then(fulfilled,rejected);
+   
+    function randomAdvice(){
+      var newPromise = new Promise(sendRequest);
+      newPromise.then(fulfilled,rejected);
+    }
+    $('#refresh').click(randomAdvice)
+        
+    
+    </script>
+  </body>
+</html>
+<script type="application/javascript" src="/share.js"></script>
